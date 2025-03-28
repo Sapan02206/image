@@ -3,301 +3,446 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Web Developer Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Train Ticket Booking System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Poppins', sans-serif; background-color: #f8f9fa; color: #333; }
-
-        /* Hero Section */
-        #hero {
-            background: #3498db;
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #3a8e8e, #84d7b9);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .button {
+            padding: 12px 25px;
+            background-color: #ff6347;
             color: white;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            flex-direction: column;
-            padding: 0 20px;
-            position: relative;
-        }
-        #hero h1 { font-size: 4rem; margin-bottom: 10px; animation: fadeIn 1.5s ease-in-out; }
-        #hero h2 { font-size: 2rem; margin-bottom: 30px; opacity: 0; animation: fadeIn 2s ease-in-out forwards; }
-        #hero p { font-size: 1.5rem; margin-bottom: 30px; opacity: 0; animation: fadeIn 2s ease-in-out forwards; }
-        #hero .cta-btn { padding: 15px 30px; font-size: 1.2rem; background-color: #e67e22; color: white; text-decoration: none; border-radius: 5px; transition: background-color 0.3s ease; }
-        #hero .cta-btn:hover { background-color: #d35400; }
-
-        /* Navigation Bar */
-        nav {
-            position: sticky;
-            top: 0;
-            background-color: #34495e;
-            color: white;
-            padding: 10px;
-            text-align: center;
-            z-index: 1000;
-        }
-        nav a {
-            margin: 0 20px;
-            color: white;
-            text-decoration: none;
-            font-size: 1.2rem;
-        }
-        nav a:hover { color: #e67e22; }
-
-        /* About Me Section */
-        #about {
-            padding: 100px 20px;
-            text-align: center;
-            background-color: #ecf0f1;
-        }
-        #about h2 { font-size: 3rem; margin-bottom: 40px; color: #2c3e50; }
-        #about p { font-size: 1.2rem; line-height: 1.6; max-width: 800px; margin: 0 auto; }
-
-        /* Projects Section */
-        #projects {
-            padding: 100px 20px;
-            text-align: center;
-            background-color: #ecf0f1;
-        }
-        #projects h2 { font-size: 3rem; margin-bottom: 40px; color: #2c3e50; }
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            margin-top: 20px;
-        }
-        .project-item {
-            background-color: #fff;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-            transition: transform 0.3s ease;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
             cursor: pointer;
-            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-            padding: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 200px;
-            background: #34495e;
-            color: white;
         }
-        .project-item:hover {
-            transform: scale(1.05);
+        .button:hover {
+            background-color: #ff4500;
         }
-        .project-item img { width: 100%; border-radius: 10px; opacity: 0.5; }
-        .project-item .project-info {
+        .train-list {
+            margin-top: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+        table th, table td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        table th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        .train-row:hover {
+            background-color: #f9f9f9;
+        }
+        .background {
             position: absolute;
-            bottom: 0;
+            top: 0;
             left: 0;
             right: 0;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 10px;
-            font-size: 1.5rem;
-            text-align: center;
+            bottom: 0;
+            background-image: url('https://images.unsplash.com/photo-1584561592118-67d07b23b0d4');
+            background-size: cover;
+            background-position: center;
+            filter: blur(8px);
+            z-index: -1;
         }
 
-        /* Modal for Project Details */
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
-            z-index: 1000;
+            z-index: 1;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            overflow-y: auto;
-            animation: fadeInModal 0.3s ease-in-out;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding-top: 60px;
         }
+
         .modal-content {
-            position: relative;
-            margin: 10% auto;
+            background-color: #fff;
+            margin: 5% auto;
             padding: 20px;
-            background-color: white;
-            width: 90%;
-            max-width: 1200px;
-            height: 80vh;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
             border-radius: 10px;
         }
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        .close-modal {
-            font-size: 2rem;
-            color: #333;
+
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
             position: absolute;
             top: 10px;
-            right: 10px;
+            right: 15px;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
             cursor: pointer;
         }
 
-        /* Footer */
-        footer { padding: 20px; background-color: #222; color: white; text-align: center; }
-        footer a {
+        .booked-section {
+            margin-top: 50px;
+            margin-bottom: 50px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+        }
+
+        /* Live Headline styles */
+        .live-headlines {
+            margin-top: 30px;
+            font-size: 18px;
+            padding: 15px;
+            background-color: #ff6347;
             color: white;
-            text-decoration: none;
-            font-size: 1.5rem;
-            margin: 0 15px;
-        }
-        footer a:hover {
-            color: #e67e22;
+            font-weight: bold;
+            text-align: center;
+            animation: marquee 10s infinite linear;
         }
 
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes fadeInModal {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
         }
 
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            .project-grid {
-                grid-template-columns: 1fr;
-            }
-            #hero h1 { font-size: 2rem; }
-            #hero h2 { font-size: 1.5rem; }
-            #hero p { font-size: 1rem; }
-            #hero .cta-btn { font-size: 1rem; padding: 10px 20px; }
-            #contact form { width: 100%; }
-            #contact input, #contact textarea { width: 100%; margin: 10px 0; padding: 10px; }
-            #contact button { width: 100%; padding: 15px; background-color: #e67e22; border: none; color: white; cursor: pointer; }
+        /* Message at the top */
+        .message {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #fff;
+            padding: 10px;
+            background-color: #28a745;
+            border-radius: 5px;
+            text-align: center;
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            z-index: 999;
+            display: none;
+        }
+
+        .error {
+            background-color: #dc3545;
         }
     </style>
 </head>
 <body>
 
-<!-- Navigation Bar -->
-<nav>
-    <a href="#hero">Home</a>
-    <a href="#about">About Me</a>
-    <a href="#projects">Projects</a>
-    <a href="#contact">Contact</a>
-</nav>
+<div class="background"></div>
 
-<!-- Hero Section -->
-<section id="hero">
-    <h1>Web Developer Portfolio</h1>
-    <h2>Hi, I’m Sapan Desai</h2>
-    <p>I’m a Web Developer specializing in front-end and back-end technologies</p>
-    <a href="#projects" class="cta-btn">Check out my work</a>
-</section>
+<div class="container">
+    <h1>Train Ticket Booking System</h1>
 
-<!-- About Me Section -->
-<section id="about">
-    <h2>About Me</h2>
-    <p> Hello! I'm Sapan Desai, a passionate web developer with expertise in both front-end and back-end technologies. I am proficient in JavaScript, HTML, CSS, Python-Basics, and C#. Over the years, I have worked on various projects that helped me sharpen my skills and grow as a developer. I am always eager to learn new technologies and improve my craft.
-        <br><br>
-        <strong>Let's Connect:</strong> Feel free to connect with me through my <a href="https://www.linkedin.com/in/sapan-desai-b83799234" target="_blank">LinkedIn Profile</a> or on <a href="https://www.instagram.com/sapandesai/" target="_blank">Instagram</a>.
-    </p>
-</section>
-
-<!-- Projects Section -->
-<section id="projects">
-    <h2>Projects</h2>
-    <div class="project-grid">
-        <!-- Project Item Example -->
-        <div class="project-item" onclick="openModal('https://sapan02206.github.io/Financial-services/')">
-            <img src="project1.jpg" alt="Project 1">
-            <div class="project-info">Project 1</div>
-        </div>
-        <div class="project-item" onclick="openModal('https://github.com/username/project2')">
-            <img src="project2.jpg" alt="Project 2">
-            <div class="project-info">Project 2</div>
-        </div>
+    <!-- Live Headlines Section -->
+    <div class="live-headlines" id="liveHeadlines">
+        <!-- Live headlines about the trains will be shown here -->
     </div>
-</section>
 
-<!-- Project Modal -->
-<div id="projectModal" class="modal">
+    <!-- Action Buttons -->
+    <button class="button" onclick="showTrains()">View Available Trains</button>
+
+    <!-- Available Trains Section -->
+    <div class="train-list" id="trainList"></div>
+
+    <!-- Booked Tickets Section -->
+    <div class="booked-section" id="bookedTickets">
+        <h2>Booked Tickets</h2>
+        <table id="bookedTable">
+            <thead>
+                <tr>
+                    <th>Train Name</th>
+                    <th>Seats</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Travel From</th>
+                    <th>Travel To</th>
+                    <th>Travel Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Booked ticket details will appear here -->
+            </tbody>
+        </table>
+    </div>
+
+    <div id="trainDetails">
+        <!-- Placeholder for train details (shown after user clicks "View Available Trains") -->
+    </div>
+
+    <!-- Success/Error Message Section (At the Top) -->
+    <div id="message" class="message"></div>
+
+</div>
+
+<!-- Modal for Booking -->
+<div id="bookingModal" class="modal">
     <div class="modal-content">
-        <span class="close-modal" onclick="closeModal()">X</span>
-        <iframe id="projectIframe" src="" title="Project details"></iframe>
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Fill in Your Details to Book a Ticket</h2>
+
+        <div id="trainDetailsForm"></div>
+
+        <form id="bookingForm">
+            <label for="seats">Number of Seats:</label>
+            <input type="number" id="seats" min="1" max="10" required><br>
+
+            <label for="name">Name:</label>
+            <input type="text" id="name" required><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" required><br>
+
+            <label for="travelFrom">Travel From:</label>
+            <select id="travelFrom" required>
+                <option value="Ahmedabad">Ahmedabad</option>
+                <option value="Vadodara">Vadodara</option>
+                <option value="Nadiad">Nadiad</option>
+                <option value="Anand">Anand</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Chennai">Chennai</option>
+                <option value="Kolkata">Kolkata</option>
+                <option value="Bangalore">Bangalore</option>
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Surat">Surat</option>
+                <option value="Mahemdavad">Mahemdavad</option>
+                <option value="Bharuch">Bharuch</option>
+                <option value="Maninagar">Maninagar</option>
+                <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+            </select><br>
+
+            <label for="travelTo">Travel To:</label>
+            <select id="travelTo" required>
+                <option value="Vadodara">Vadodara</option>
+                <option value="Nadiad">Nadiad</option>
+                <option value="Anand">Anand</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Chennai">Chennai</option>
+                <option value="Kolkata">Kolkata</option>
+                <option value="Bangalore">Bangalore</option>
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Surat">Surat</option>
+                <option value="Mahemdavad">Mahemdavad</option>
+                <option value="Bharuch">Bharuch</option>
+                <option value="Maninagar">Maninagar</option>
+                <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+            </select><br>
+
+            <label for="travelDateFrom">Travel Date From:</label>
+            <input type="date" id="travelDateFrom" required><br>
+
+            <label for="travelDateTo">Travel Date To:</label>
+            <input type="date" id="travelDateTo" required><br>
+
+            <button type="submit" class="button">Book Now</button>
+        </form>
     </div>
 </div>
 
-<!-- Contact Section -->
-<section id="contact">
-    <h2>Contact Me</h2>
-    <form id="contact-form">
-        <input type="text" name="user_name" placeholder="Your Name" required>
-        <input type="email" name="user_email" placeholder="Your Email" required>
-        <textarea name="message" placeholder="Your Message" required></textarea>
-        <button type="submit">Send Message</button>
-        <p id="status-message" style="display: none;"></p>
-    </form>
-</section>
-
-<!-- Footer -->
-<footer>
-    <p>&copy; 2025 Sapan Desai | All Rights Reserved</p>
-    <a href="https://www.linkedin.com/in/sapan-desai-b83799234" target="_blank">
-        <i class="fab fa-linkedin"></i>
-    </a>
-    <a href="https://www.instagram.com/sapandesai/" target="_blank">
-        <i class="fab fa-instagram"></i>
-    </a>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
-
 <script>
-    // Initialize EmailJS with your user API key
-    emailjs.init("flkyfZMNukOjsFljx");
+    const trains = [
+        { id: 1, name: 'Shatabdi Express', source: 'Delhi', destination: 'Mumbai', departure: '06:00 AM', arrival: '12:00 PM', availableSeats: 50 },
+        { id: 2, name: 'Rajdhani Express', source: 'Kolkata', destination: 'Chennai', departure: '07:30 AM', arrival: '03:00 PM', availableSeats: 100 },
+        { id: 3, name: 'Duronto Express', source: 'Bangalore', destination: 'Hyderabad', departure: '08:00 AM', arrival: '11:30 AM', availableSeats: 75 },
+        { id: 4, name: 'Garib Rath', source: 'Patna', destination: 'Lucknow', departure: '09:00 AM', arrival: '03:00 PM', availableSeats: 150 },
+        { id: 5, name: 'Ahmedabad Local', source: 'Ahmedabad', destination: 'Vadodara', departure: '06:30 AM', arrival: '07:30 AM', availableSeats: 80 },
+        { id: 6, name: 'Mumbai Local', source: 'Mumbai', destination: 'Thane', departure: '05:00 AM', arrival: '05:45 AM', availableSeats: 200 },
+        { id: 7, name: 'Ahmedabad Local 2', source: 'Ahmedabad', destination: 'Nadiad', departure: '7:00 PM', arrival: '7:45 PM', availableSeats: 200 },
+        { id: 8, name: 'Intercity', source: 'Ahmedabad', destination: 'Nadiad', departure: '9:00 PM', arrival: '9:45 PM', availableSeats: 200 },
+        { id: 9, name: 'Memu', source: 'Ahmedabad', destination: 'Bharuch', departure: '7:20 PM', arrival: '8:00 PM', availableSeats: 200 },
+        { id: 10, name: 'Howrah Express', source: 'Nadiad', destination: 'Mahemdavad', departure: '6:15 PM', arrival: '7:35 PM', availableSeats: 200 }
+    
+    ];
 
-    // Function to handle form submission
-    document.getElementById("contact-form").addEventListener("submit", function(event) {
-        event.preventDefault(); // Prevent the form from submitting the default way
+    let bookedTickets = [];
 
-        // Display a loading message while the email is being sent
-        document.getElementById("status-message").style.display = "block";
-        document.getElementById("status-message").innerHTML = "Sending...";
+    // Show the available trains
+    function showTrains() {
+        const trainList = document.getElementById('trainList');
+        let trainsHTML = `
+            <table>
+                <tr>
+                    <th>Train Name</th>
+                    <th>Source</th>
+                    <th>Destination</th>
+                    <th>Departure</th>
+                    <th>Arrival</th>
+                    <th>Available Seats</th>
+                    <th>Action</th>
+                </tr>
+        `;
 
-        // Send the form data using EmailJS
-        emailjs.sendForm("service_wqd0fci", "template_14urgnq", this)
-            .then(function(response) {
-                console.log("Success:", response);
-                // Show a success message
-                document.getElementById("status-message").innerHTML = "Message sent successfully!";
-                document.getElementById("status-message").style.color = "green";
-            })
-            .catch(function(error) {
-                console.error("Error details:", error); // Log detailed error for debugging
-                // Show an error message
-                document.getElementById("status-message").innerHTML = "Oops! Something went wrong. Please try again.";
-                document.getElementById("status-message").style.color = "red";
-            });
+        trains.forEach(train => {
+            trainsHTML += `
+                <tr class="train-row">
+                    <td>${train.name}</td>
+                    <td>${train.source}</td>
+                    <td>${train.destination}</td>
+                    <td>${train.departure}</td>
+                    <td>${train.arrival}</td>
+                    <td>${train.availableSeats}</td>
+                    <td><button class="button" onclick="openBookingModal(${train.id})">Book Now</button></td>
+                </tr>
+            `;
+        });
 
-        // Reset the form after submission
-        document.getElementById("contact-form").reset();
+        trainsHTML += `</table>`;
+        trainList.innerHTML = trainsHTML;
+    }
+
+    // Open booking modal for selected train
+    function openBookingModal(trainId) {
+        const train = trains.find(t => t.id === trainId);
+        const form = document.getElementById('trainDetailsForm');
+        form.innerHTML = `
+            <h3>Book ${train.name}</h3>
+            <p>From: ${train.source}</p>
+            <p>To: ${train.destination}</p>
+            <p>Departure: ${train.departure}</p>
+            <p>Arrival: ${train.arrival}</p>
+        `;
+        document.getElementById('bookingModal').style.display = "block";
+    }
+
+    // Close modal
+    function closeModal() {
+        document.getElementById('bookingModal').style.display = "none";
+    }
+
+    // Handle form submission for booking
+    document.getElementById('bookingForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const travelFrom = document.getElementById('travelFrom').value;
+        const travelTo = document.getElementById('travelTo').value;
+        const travelDateFrom = document.getElementById('travelDateFrom').value;
+        const travelDateTo = document.getElementById('travelDateTo').value;
+        const seats = document.getElementById('seats').value;
+
+        // Check if the selected train has available seats
+        const availableTrain = trains.find(t => t.source === travelFrom && t.destination === travelTo && t.availableSeats >= seats);
+
+        if (availableTrain) {
+            // Proceed with booking
+            const bookingDetails = {
+                name,
+                email,
+                travelFrom,
+                travelTo,
+                travelDateFrom,
+                travelDateTo,
+                seats
+            };
+
+            // Deduct available seats
+            availableTrain.availableSeats -= seats;
+
+            // Add booked ticket to the array
+            bookedTickets.push(bookingDetails);
+            updateBookedTickets();
+
+            // Show success message at the top
+            showMessage("Your booking is done successfully!", "success");
+        } else {
+            // Show error message at the top
+            showMessage("The train is not available for the selected route. Your booking has failed.", "error");
+        }
+
+        closeModal();
     });
 
-    // Function to open modal and load iframe
-    function openModal(projectUrl) {
-        var modal = document.getElementById("projectModal");
-        var iframe = document.getElementById("projectIframe");
-        iframe.src = projectUrl;
-        modal.style.display = "block";
+    // Show success/error message
+    function showMessage(message, type) {
+        const messageDiv = document.getElementById('message');
+        messageDiv.textContent = message;
+        messageDiv.className = `message ${type === "error" ? "error" : ""}`;
+        messageDiv.style.display = "block";
+
+        setTimeout(() => {
+            messageDiv.style.display = "none";
+        }, 5000);
     }
 
-    // Function to close modal
-    function closeModal() {
-        var modal = document.getElementById("projectModal");
-        var iframe = document.getElementById("projectIframe");
-        iframe.src = "";
-        modal.style.display = "none";
+    // Update the Booked Tickets table
+    function updateBookedTickets() {
+        const bookedTable = document.getElementById('bookedTable').getElementsByTagName('tbody')[0];
+        bookedTable.innerHTML = '';
+
+        bookedTickets.forEach(ticket => {
+            const row = bookedTable.insertRow();
+            row.innerHTML = `
+                <td>${ticket.travelFrom} - ${ticket.travelTo}</td>
+                <td>${ticket.seats}</td>
+                <td>${ticket.name}</td>
+                <td>${ticket.email}</td>
+                <td>${ticket.travelFrom}</td>
+                <td>${ticket.travelTo}</td>
+                <td>${ticket.travelDateFrom} to ${ticket.travelDateTo}</td>
+                <td><button class="button" onclick="cancelTicket('${ticket.email}')">Cancel</button></td>
+            `;
+        });
     }
+
+    // Cancel booked ticket
+    function cancelTicket(email) {
+        bookedTickets = bookedTickets.filter(ticket => ticket.email !== email);
+        updateBookedTickets();
+    }
+
+    // Update Live Headlines for train booking updates
+    function updateLiveHeadlines() {
+        const headlines = [
+            'Shatabdi Express: 50 Seats Available!',
+            'Rajdhani Express: Now Booking for April!',
+            'Duronto Express: Book Your Tickets Now!',
+            'Garib Rath: Low Fare Tickets Available!'
+        ];
+
+        const liveHeadlines = document.getElementById('liveHeadlines');
+        liveHeadlines.innerHTML = headlines.join(' | ');
+    }
+
+    // Call to update live headlines every 5 seconds
+    setInterval(updateLiveHeadlines, 5000);
+
+    // Call update on load
+    updateLiveHeadlines();
 </script>
 
 </body>
